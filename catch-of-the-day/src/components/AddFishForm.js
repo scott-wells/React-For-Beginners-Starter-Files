@@ -7,6 +7,7 @@ import React from 'react';
 class AddFishForm extends React.Component {
 
     // Create Refs - references are used to bind the variables to form inputs
+    // Allows us to use 'this.' and refer to the component
     nameRef = React.createRef();
     priceRef = React.createRef();
     statusRef = React.createRef();
@@ -33,6 +34,8 @@ class AddFishForm extends React.Component {
         }
 
         // 3. Pass the fish object to props
+        // This 'addFish' prop is a method that lives in App.js
+        // This is where the handoff occurs - we pass the fish object
         this.props.addFish(fish);
 
         // 4. Refresh the fish form
@@ -40,6 +43,9 @@ class AddFishForm extends React.Component {
 
     }
 
+    // Render Component to DOM
+    // Components must be rendered to be visible on the DOM
+    // This is where we put our HTML for components and attach Props
     render() {
         return (
             // onSubmit fires the createFish method when the '+ Add Fish' button is clicked

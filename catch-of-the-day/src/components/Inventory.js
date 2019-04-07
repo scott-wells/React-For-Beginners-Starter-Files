@@ -11,12 +11,14 @@ class Inventory extends React.Component {
     // Components must be rendered to be visible on the DOM
     // This is where we put our HTML for components and attach Props
     render() {
-        return (
-            // Props to be passed down to AddFishForm - addFish
-            // Activate method loadSampleFishes when button is clicked
+        return ( 
             <div className="inventory">
                 <h2>Inventory</h2>
+
+                {/* Props to be passed down to AddFishForm - addFish */}
                 <AddFishForm addFish={this.props.addFish} />
+
+                {/* Activate method loadSampleFishes when button is clicked */}
                 <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
             </div>
         )
