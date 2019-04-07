@@ -14,6 +14,7 @@ class AddFishForm extends React.Component {
     imageRef = React.createRef();
 
     // Component Methods
+    // Actually a property set to the component
     // Method is passed an 'event' which is triggered when the form submits - onSubmit
     createFish = (event) => {
 

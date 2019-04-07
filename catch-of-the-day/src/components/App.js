@@ -1,6 +1,6 @@
-
 // Import Components
 // * Must import React first
+// This is our mama/top-level component
 import React from 'react';
 import Header from './Header';
 import Order from './Order';
@@ -21,7 +21,7 @@ class App extends React.Component {
     };
 
     // Component Methods
-    // 
+    // Actually a property set to the component
     addFish = fish => {
        // 1. Take a copy of an existing state 
        // Spread Operator used in this object to make an array of objects
