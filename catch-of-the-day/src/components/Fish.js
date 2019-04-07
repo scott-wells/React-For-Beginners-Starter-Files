@@ -1,6 +1,7 @@
 // Import Components
 // * Must import React first
 import React from 'react';
+import { formatPrice } from '../helpers';
 
 // Creating React Component
 // A React Component is a type of inheritable class
@@ -10,14 +11,19 @@ class Fish extends React.Component {
     // Components must be rendered to be visible on the DOM
     // This is where we put our HTML for components and attach Props
     render() {
+
+        const {image, name, price, desc, status} = this.props.eachFish;
+
         return (
-            
+
             <li className="menu-fish">
-                <img scr={this.props.details.image} alt={this.props.details.name} />
+                <img src={image} alt={name} />
                 <h3 className="fish-name">
-                    {this.props.details.name}
-                </h3>
-                
+                {name}
+                <span className="price">{formatPrice(price)}</span>
+                </h3>  
+                <p>{desc}</p>
+                <button>Add To Cart</button>
             </li>
         )
     }

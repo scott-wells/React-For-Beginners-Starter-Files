@@ -56,8 +56,10 @@ class App extends React.Component {
                 <div className="menu">
                     <Header tagline="Fresh Seafood Market" />
                     <ul className="fishes">
-                        {/* Take the initial state and map it to a new array with unique keys */}
-                        {Object.keys(this.state.fishes).map(key => <Fish key={key} details={this.state.fishes[key]} />)}
+                        {/* Create a list of items - one for each in item in 'sampleFishes', which we load with a button click */}
+                        {/* Take the initial state and map it to a new array of Fish components with unique keys */}
+                        {/* I changed the name of the prop form 'details' to 'eachFish' */}
+                        {Object.keys(this.state.fishes).map(key => <Fish key={key} eachFish={this.state.fishes[key]} />)}
                     </ul>
                 </div>
 
