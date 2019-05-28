@@ -1,49 +1,58 @@
 // Import Components
 // * Must import React first
-// Can use methods from other Components - { getFunName }
 import React from 'react';
-import { getFunName } from '../helpers';
 
-// Creating React Component
-// A React Component is a type of inheritable class
+//import custom function from file
+import { getFunName } from "../helpers";
+
+// this is a component
 class StorePicker extends React.Component {
+
+    // ref is similar to state; allows us to target a DOM node
     myInput = React.createRef(); 
 
-    // Component Methods
-    // Actually a property set to the component
+    // function being used in the <form>
+    // *is a property - NOT a method - with an arrow function (weird React quirk)
     goToStore = event => {
-
-        // 1. Stop form from submitting
-        event.preventDefault();
-
-        // 2. Get the text from that input
+        
+        // stops <form> from submitting & refreshing a new page
+        event.preventDefault(); 
+        
+        // assigns the value of the ref, 'myInput', which targets the <form>
         const storeName = this.myInput.current.value;
-
-        // 3. Change the page to /store/whatever-they-entered
-        // Change page to new URL without having to reload
+        
+        // this is a tricky one that doesn't work in all cases
+        // component 'Storepicker' is somehow being passed props from React 'Router'
+        // we can use .push() on that prop to route us to a new URL
+        // .push() appends the template literal to the URL and routes us there
         this.props.history.push(`/store/${storeName}`);
-    };
+    }
 
-    // Render Component to DOM
-    // Components must be rendered to be visible on the DOM
-    // This is where we put our HTML for components and attach Props
     render() {
-        return (
-            <form className="store-selector" onSubmit={this.goToStore}>
+        
+        return ( 
+        // parentheses allow for cleaner indentation
+        // cannot put sibling tags in render(); tags must be enclosed; <Fragment></Fragment>
+
+            // 'onSubmit' is an event triggered on the <form>
+            // we give it a value of 'this.functionName'
+            <form className="store-selector" onSubmit={this.goToStore}> 
                 <h2>Please Enter A Store</h2>
                 <input 
                     type="text" 
-                    ref={this.myInput}
+                    ref={this.myInput} // targeting this <input> as 'myInput'
                     required 
                     placeholder="Store Name" 
+                    // used a custom function as the value of 'defaultValue'
+                    // dynamically loads a silly name on page load; 'getFunName()'
                     defaultValue={getFunName()} 
                 />
-                <button type="submit">Visit Store -></button>
+                <button type="submit">Visit Store</button>
             </form>
-        )
+        
+        );
     }
 }
 
-//Exporting Component
-// * Components must be exported (also can be done on the same line when you create a component)
+// *you MUST export your component to use elsewhere
 export default StorePicker;

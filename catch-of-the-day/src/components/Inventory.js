@@ -3,8 +3,8 @@
 import React from 'react';
 import AddFishForm from './AddFishForm';
 
-// Creating React Component
-// A React Component is a type of inheritable class
+
+// Create Component
 class Inventory extends React.Component {
 
     // Render Component to DOM
@@ -12,19 +12,20 @@ class Inventory extends React.Component {
     // This is where we put our HTML for components and attach Props
     render() {
         return ( 
+
             <div className="inventory">
                 <h2>Inventory</h2>
-
-                {/* Props to be passed down to AddFishForm - addFish */}
-                <AddFishForm addFish={this.props.addFish} />
-
-                {/* Activate method loadSampleFishes when button is clicked */}
+                {/* addFish() has been passed via props */}
+                {/* we must reference 'props' - this.PROPS.addFish */}
+                <AddFishForm addFish={this.props.addFish} /> 
+                {/* loadSampleFishes() has been passed via props */}
                 <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
             </div>
-        )
+
+        );
     }
 }
 
-//Exporting Component
+//Export Component
 // * Components must be exported (also can be done on the same line when you create a component)
 export default Inventory;

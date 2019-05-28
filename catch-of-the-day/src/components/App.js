@@ -19,57 +19,76 @@ class App extends React.Component {
     // State and the methods that update State have to live in the same component
     state = {
         fishes: {},
-        order: {}
-    };
+        order: {},
+    }
 
     // Component Methods
 
     // This method is passed down to the AddFishForm component
     // We use the 'fish' object from AddFishForm as a parameter
     addFish = fish => {
-       // 1. Take a copy of an existing state 
-       // Spread Operator used to make a copy of this state
+        
+       // current state of 'fishes' is copied into a new variable
+       // spread operator used to make a copy of this state
        const fishes = {...this.state.fishes};
 
-       // 2. Add our new fish to the fishes variable
+       // pass in the 'fish' object & add it to fishes (our state)
+       // Date.now() gives us time in ms since Jan 1, 1970; essentially a unqiue value
        fishes[`fish${Date.now()}`] = fish;
 
-       // 3. Set the new fishes object to state
-       // Pass .setState the piece of state you wish to update - key
-       // Pass .setState the variable you wish to update it to - value
-       this.setState({ fishes: fishes });
-    }
+        // update state with the new 'fishes' object
+        // Pass .setState() the piece of state you wish to update - key
+        // Pass .setState() the variable you wish to update it to - value
+        this.setState({
+            fishes: fishes
+        });
+    };
 
     // This method is passed down to the Inventory component for an onClick event
     loadSampleFishes = () => {
+        
         // Pass .setState the piece of state you wish to update - 'fishes'
         // Pass .setState the variable (in this case, a component of JSON data) you wish to update it to - 'sampleFishes' 
-        this.setState({ fishes: sampleFishes });
+        this.setState({ fishes: sampleFishes});
     }
+       
+   
 
     // Render Component to DOM
     // Components must be rendered to be visible on the DOM
     // This is where we put our HTML for components and attach Props
     render() {
         return (
+
             <div className="catch-of-the-day">
                 <div className="menu">
+                    {/* below is a custom tag for a component */}
                     <Header tagline="Fresh Seafood Market" />
                     <ul className="fishes">
-                        {/* Create a list of items - one for each in item in 'sampleFishes', which we load with a button click */}
-                        {/* Take the initial state and map it to a new array of Fish components with unique keys */}
-                        {/* I changed the name of the prop form 'details' to 'eachFish' */}
-                        {Object.keys(this.state.fishes).map(key => <Fish key={key} eachFish={this.state.fishes[key]} />)}
-                    </ul>
+                        {/* - 'fishes' is an object with key/value pairs *see above
+                            - Object.keys turns 'fishes' into an array of keys (indexes)
+                            - we reference the object in our state & map over each key in the now array of 'fishes'
+                            - we also need to pass a unique identifier to each key in the array - key={key} */}
+                        {Object.keys(this.state.fishes).map(key => (
+                            <Fish 
+                                key={key} 
+                                index={key}
+                                details={this.state.fishes[key]}
+                                addToOrder={this.addToOrder}
+                            />
+                        ))}
+                    </ul> 
                 </div>
-
                 <Order />
-
-                {/* Props to be passed down to Inventory - addFish, loadSampleFishes */}
-                {/* You can name props anything, but it's best to stay consistent */}
-                <Inventory addFish={this.addFish} loadSampleFishes={this.loadSampleFishes} />
+                <Inventory 
+                    // methods are passed via props
+                    // we don't neeed to reference 'props' yet - 'this.PROPS.addFish'
+                    addFish={this.addFish} 
+                    loadSampleFishes={this.loadSampleFishes} 
+                />
             </div>  
-        )
+
+        );
     }
 }
 
