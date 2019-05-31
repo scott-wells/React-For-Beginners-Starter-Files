@@ -3,17 +3,20 @@ import { formatPrice } from "../helpers";
 
 class Order extends React.Component {
 
+    // this function prints info about the 'fish[key]' in the <ul>
+    // variables are 'key', 'fish', 'count' and 'isAvailable'
     renderOrder = key => {
-
-        // this function prints info about the 'fish[key]' in the <ul>
-        // variables are 'key', 'fish', 'count' and 'isAvailable'
-        // if 'fishes' doesn't exist on page load, don't show anything in 'order'
-        // if 'isAvailable' is true then 'fish[key]' is 'available'
-        // if 'isAvailable' is not true then print message
+        
         const fish = this.props.fishes[key];
         const count = this.props.order[key];
+
+        // if 'isAvailable' is true then 'fish[key]' is 'available'
         const isAvailable = fish && fish.status === "available";
+
+        // if 'fishes' doesn't exist on page load, don't show anything in 'order'
         if(!fish) return null;
+
+        // if 'isAvailable' is not true then print message
         if(!isAvailable) {
             return (
                 <li key={key}>
@@ -25,6 +28,7 @@ class Order extends React.Component {
             <li key={key}>
                 {count} lbs {fish.name}
                 {formatPrice(count * fish.price)}
+                <button onClick={() => this.props.removeFromOrder(key)}>&times;</button>
             </li>
         );
     };

@@ -87,12 +87,41 @@ class App extends React.Component {
         });
     };
 
+    // This method comes upstream from 'EditFishForm' to update 'fishes' state
+    // takes the key & updatedFish object as arguments
+    updateFish = (key, updatedFish) => {
+
+        // make a copy of current state
+        const fishes = {...this.state.fishes};
+
+        // updates the 'fishes[key]' that was edited with the values from the 'updatedFish' object
+        fishes[key] = updatedFish;
+
+        // update state with the new 'fishes' object
+        // Pass .setState() the piece of state you wish to update - key
+        // Pass .setState() the variable you wish to update it to - value
+        this.setState({ fishes: fishes });
+    }
+
+    // This method is passed down to the Inventory component for an onClick event, takes 'key' as an arguement
+    deleteFish = (key) => {
+
+        // make a copy of current state
+        const fishes = {...this.state.fishes};
+
+        // set the fish we're deleting to null (so it works with Firebase)
+        fishes[key] = null;
+
+        // update state with the new 'fishes' object
+        this.setState({ fishes: fishes });
+    }
+
     // This method is passed down to the Inventory component for an onClick event
     loadSampleFishes = () => {
         
         // Pass .setState the piece of state you wish to update - 'fishes'
         // Pass .setState the variable (in this case, a component of JSON data) you wish to update it to - 'sampleFishes' 
-        this.setState({ fishes: sampleFishes});
+        this.setState({ fishes: sampleFishes });
     }
 
     // This method is passed down to the Order component for an onClick event
@@ -109,7 +138,13 @@ class App extends React.Component {
         // Pass .setState() the piece of state you wish to update - key
         // Pass .setState() the variable you wish to update it to - value
         this.setState({ order: order });
-    }       
+    }
+    
+    removeFromOrder = (key) => {
+        const order = {...this.state.order};
+        delete order[key];
+        this.setState({ order: order });
+    }
    
 
     // Render Component to DOM
@@ -137,12 +172,19 @@ class App extends React.Component {
                         ))}
                     </ul> 
                 </div>
-                <Order fishes={this.state.fishes} order={this.state.order} />
+                <Order 
+                    // methods are passed via props or state
+                    fishes={this.state.fishes} 
+                    order={this.state.order}
+                    removeFromOrder={this.removeFromOrder} 
+                />
                 <Inventory 
-                    // methods are passed via props
-                    // we don't neeed to reference 'props' yet - 'this.PROPS.addFish'
+                    // methods are passed via props or state
                     addFish={this.addFish} 
-                    loadSampleFishes={this.loadSampleFishes} 
+                    updateFish={this.updateFish}
+                    deleteFish={this.deleteFish}
+                    loadSampleFishes={this.loadSampleFishes}
+                    fishes={this.state.fishes} 
                 />
             </div>  
 
